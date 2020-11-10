@@ -130,3 +130,7 @@ dmypy.json
 
 # Data folder
 datas/
+
+# IDEs folders
+.idea/
+.vscode/

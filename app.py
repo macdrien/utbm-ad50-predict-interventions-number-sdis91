@@ -28,6 +28,10 @@ gripe_data = load_and_filter_incidence_rdd_file(gripe_filepath, filter_ile_de_fr
 diarrhee_data = load_and_filter_incidence_rdd_file(diarrhee_filepath, filter_ile_de_france)
 varicelle_data = load_and_filter_incidence_rdd_file(varicelle_filepath, filter_ile_de_france)
 
+# #Temporary output
 print(gripe_data)
 print(diarrhee_data)
 print(varicelle_data)
+
+sdis91_data = pandas.read_csv(sdis91_filepath)
+days_off_data = pandas.read_csv(days_off_filepath)

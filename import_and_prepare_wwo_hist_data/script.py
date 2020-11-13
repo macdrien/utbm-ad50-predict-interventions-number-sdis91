@@ -1,15 +1,12 @@
 import requests
-import json
-
-global_api_key = 'YOUR_WWO_KEY'
-global_location = 'Essonne'
-global_start_year = 2010
-global_end_year = 2017
-global_start_month = 1
-global_end_month = 12
 
 
 def get_number_of_days(year, month):
+    """
+    :param year: int: The year of the month to take.
+    :param month: int: The month to take
+    :return: The number of days in the given month
+    """
     number_of_days = 31
     if month in [4, 6, 9, 11]:
         number_of_days = 30
@@ -20,7 +17,27 @@ def get_number_of_days(year, month):
             number_of_days = 29
     return number_of_days
 
-def get_weather_data_in_a_duration(api_key, location, start_year, end_year, start_month=1, end_month=12, frequency=24, format='json'):
+def get_weather_data_in_a_duration(api_key, location, start_year, end_year, start_month=1, end_month=12, frequency=24, return_format='json'):
+    """
+    Get all the weather data from World Weather Online between two years and return the data in a table containing objects which describe a month.
+    It is possible to not take all months from the first and the last year by setting up start_month and end_month.
+
+    World Weather Online allows us to get data in different intervals of hours. By default, the method take one report for each day (24h). But WWO accepts 1, 3, 6 or 12 hours.
+    WWO can return the data in two different formats: JSON and XML. By default, the asked format is JSON, but return_format accepts 'XML' too.
+
+    Finally, this method does not provide an API key. You have to give yours in the first argument 'api_key'.
+
+    :param api_key: str: The WWO API key to use for the requests.
+    :param location: str: The place from which the weather data will be asked.
+    :param start_year: int: The starting year of the interval of date to take.
+    :param end_year: int: The ending year of the interval of date to take.
+    :param start_month: int <Optional - default 1>: The starting month of the first year to take the weather information. It has to be in the interval [1, 12].
+    :param end_month: int <Optional - default 12>: The ending month of the last year to take the weather information. It has to be in the interval [1, 12].
+    :param frequency: int <Optional - default 24>: The interval, in hour, between two reports. It has to be in the set of intervals {1, 3, 6, 12, 24} .
+    :param return_format: str <Optional - default 'json'>: The wanted data format for the result. It can be only 'json' or 'xml'.
+
+    :return: A list of reports (dictionary). Each report is structured as following: {'year': year_of_report, 'month': month_of_report, 'result': 'The report in the asked format'}
+    """
     if api_key is None:
         print('[ERROR] The get_weather_data_in_a_duration needs an api_key to get the credentials')
         return None
@@ -30,7 +47,6 @@ def get_weather_data_in_a_duration(api_key, location, start_year, end_year, star
         return None
 
     url = 'https://api.worldweatheronline.com/premium/v1/past-weather.ashx'
-    # ?q=Essonne&date=2010-01-01&enddate=2017-12-31&tp=24&format=json&key=YOUR_WWO_KEY
 
     results = []
 
@@ -43,7 +59,7 @@ def get_weather_data_in_a_duration(api_key, location, start_year, end_year, star
                 'date': '{}-{}-{}'.format(year, month, '01'),
                 'enddate': '{}-{}-{}'.format(year, month, number_of_days),
                 'tp' : frequency,
-                'format': format,
+                'format': return_format,
                 'key': api_key
             }
 
@@ -59,21 +75,3 @@ def get_weather_data_in_a_duration(api_key, location, start_year, end_year, star
                 print('[ERR] Request failed for {}-{}'.format(month, year))
 
     return results
-
-
-duration_results = get_weather_data_in_a_duration(global_api_key, global_location, global_start_year, global_end_year)
-
-# Write all results into the results.json file
-file = open("results.json", 'a')
-print('file opened')
-
-file.write('[')
-for result in duration_results:
-    file.write(json.dumps(result))
-    if result != duration_results[-1]:
-        file.write(',')
-    print('data for {}-{} printed'.format(result['month'], result['year']))
-file.write(']')
-
-file.close()
-print('file closed')

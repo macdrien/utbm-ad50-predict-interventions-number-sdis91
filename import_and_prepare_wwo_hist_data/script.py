@@ -11,7 +11,7 @@ def get_number_of_days(year, month):
     if month in [4, 6, 9, 11]:
         number_of_days = 30
     elif month == 2:
-        if (year % 4 == 0 and year % 100 == 0) or year % 400 == 0:
+        if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
             number_of_days = 28
         else:
             number_of_days = 29

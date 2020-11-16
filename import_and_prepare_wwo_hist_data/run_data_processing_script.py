@@ -27,7 +27,11 @@ for monday_index in range(3, len(daily_data), 7):
     csv_line['week'] = '{}{}'.format(current_date[0], week_number if week_number >= 10 else '0{}'.format(week_number))
 
     # Get temperature min and max
-    csv_line['temperature_max'] = max([daily_data[monday_index + week_index]['maxtempC'] for week_index in range(7)])
-    csv_line['temperature_min'] = min([daily_data[monday_index + week_index]['mintempC'] for week_index in range(7)])
+    csv_line['temperature_max'] = max([int(daily_data[monday_index + week_index]['maxtempC']) for week_index in range(7)])
+    csv_line['temperature_min'] = min([int(daily_data[monday_index + week_index]['mintempC']) for week_index in range(7)])
+    csv_line['temperature_average'] = round(sum([int(daily_data[monday_index + week_index]['avgtempC']) for week_index in range(7)]) / 7, 2)
 
     csv_lines.append(csv_line)
+
+for line in csv_lines:
+    print(line)

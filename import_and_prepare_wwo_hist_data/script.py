@@ -1,4 +1,5 @@
 import requests
+import calendar
 
 
 def get_number_of_days(year, month):
@@ -11,13 +12,10 @@ def get_number_of_days(year, month):
     if month in [4, 6, 9, 11]:
         number_of_days = 30
     elif month == 2:
-        if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
-            number_of_days = 28
-        else:
-            number_of_days = 29
+        number_of_days = 29 if calendar.isleap(year) else 28
     return number_of_days
 
-def get_weather_data_in_a_duration(api_key, location, start_year, end_year, start_month=1, end_month=12, frequency=24, return_format='json'):
+def get_weather_data_in_a_duration(api_key, location, start_year, end_year=None, start_month=1, end_month=12, frequency=24, return_format='json'):
     """
     Get all the weather data from World Weather Online between two years and return the data in a table containing objects which describe a month.
     It is possible to not take all months from the first and the last year by setting up start_month and end_month.
@@ -54,14 +52,23 @@ def get_weather_data_in_a_duration(api_key, location, start_year, end_year, star
         for month in range(start_month, end_month + 1):
 
             number_of_days = get_number_of_days(year, month)
-            params = {
-                'q': location,
-                'date': '{}-{}-{}'.format(year, month, '01'),
-                'enddate': '{}-{}-{}'.format(year, month, number_of_days),
-                'tp' : frequency,
-                'format': return_format,
-                'key': api_key
-            }
+            if end_year is not None:
+                params = {
+                    'q': location,
+                    'date': '{}-{}-{}'.format(year, month, '01'),
+                    'enddate': '{}-{}-{}'.format(year, month, number_of_days),
+                    'tp' : frequency,
+                    'format': return_format,
+                    'key': api_key
+                }
+            else:
+                params = {
+                    'q': location,
+                    'date': '{}-{}-{}'.format(year, month, '01'),
+                    'tp': frequency,
+                    'format': return_format,
+                    'key': api_key
+                }
 
             print('[INF] Request for {}-{}'.format(month, year))
 

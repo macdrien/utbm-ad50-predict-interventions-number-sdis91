@@ -1,6 +1,6 @@
 from src.utils import load_and_filter_csv
 
-datadir = '../data/'
+datadir = './data/'
 sdis91_filepath = datadir + 'interventions-hebdo-2010-2017.csv'
 gripe_filepath = datadir + 'incidence-RDD-3-syndromes-grippaux.csv'
 diarrhee_filepath = datadir + 'incidence-RDD-6-syndrome-diarrhee-aigue.csv'

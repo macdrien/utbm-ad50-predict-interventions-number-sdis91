@@ -58,7 +58,7 @@ for monday_index in range(3, len(daily_data), 7):
 # CSV Generation
 with open('./data/wwo_hist.csv', 'w') as file:
     file.write(csv_separator.join(csv_headers) + '\n')
-    for line in csv_lines:
+    for line in csv_lines[::-1]:
         file.write(
             ','.join(
                 [str(value) for value in line.values()]) + '\n')

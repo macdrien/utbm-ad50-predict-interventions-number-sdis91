@@ -50,10 +50,12 @@ for monday_index in range(3, len(daily_data), 7):
     csv_line['temperature_min'] = min([int(daily_data[monday_index + week_index]['mintempC']) for week_index in range(7)])
     csv_line['temperature_average'] = round(sum([int(daily_data[monday_index + week_index]['avgtempC']) for week_index in range(7)]) / 7, 2)
 
+    # Get the city name without ', France' at the end (which will introduce de bug in the csv)
     csv_line['city'] = original_data[0]['result']['data']['request'][0]['query'].split(',')[0]
 
     csv_lines.append(csv_line)
 
+# CSV Generation
 with open('./data/wwo_hist.csv', 'w') as file:
     file.write(csv_separator.join(csv_headers) + '\n')
     for line in csv_lines:

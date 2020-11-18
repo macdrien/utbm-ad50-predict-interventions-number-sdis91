@@ -14,7 +14,26 @@ for monthly_report in original_data:
     daily_data.extend(monthly_report['result']['data']['weather'])
 
 csv_separator = ','
-csv_headers = ['week', 'sunrise', 'sunset', 'moonrise', 'moonset', 'moon_phase', 'moon_illumination', 'temperature_max', 'temperature_min', 'temperature_average', 'total_snow_cm', 'sun_hour', 'wind_speed_kmph', 'wind_direction_degree', 'precipitation_mm', 'humidity', 'visibility_km', 'pressure', 'cloud_cover', 'heat_index_c', 'dew_point_c', 'wind_chill_c', 'wind_gust_kmph', 'feels_like_c', 'uv_index', 'city']
+
+# Here, headers are append one by one to make tests and development easier.
+# In the end, all kept headers will be in one big array
+csv_headers = ['week']
+# csv_headers.extend(['sunrise', 'sunset', 'moonrise', 'moonset', 'moon_phase', 'moon_illumination'])
+csv_headers.extend(['temperature_max', 'temperature_min', 'temperature_average'])
+# csv_headers.append('total_snow_cm')
+# csv_headers.append('sun_hour')
+# csv_headers.extend(['wind_speed_kmph', 'wind_direction_degree'])
+# csv_headers.append('precipitation_mm')
+# csv_headers.append('humidity')
+# csv_headers.append('visibility_km')
+# csv_headers.append('pressure')
+# csv_headers.append('cloud_cover')
+# csv_headers.append('heat_index_c')
+# csv_headers.append('dew_point_c')
+# csv_headers.extend(['wind_chill_c', 'wind_gust_kmph'])
+# csv_headers.append('feels_like_c')
+# csv_headers.append('uv_index')
+csv_headers.append('city')
 csv_lines = []
 
 for monday_index in range(3, len(daily_data), 7):

@@ -20,7 +20,7 @@ csv_separator = ','
 csv_headers = ['week']
 # csv_headers.extend(['sunrise', 'sunset', 'moonrise', 'moonset', 'moon_phase', 'moon_illumination'])
 csv_headers.extend(['temperature_max', 'temperature_min', 'temperature_average'])
-# csv_headers.append('total_snow_cm')
+csv_headers.append('total_snow_cm')
 # csv_headers.append('sun_hour')
 # csv_headers.extend(['wind_speed_kmph', 'wind_direction_degree'])
 # csv_headers.append('precipitation_mm')
@@ -49,6 +49,8 @@ for monday_index in range(3, len(daily_data), 7):
     csv_line['temperature_max'] = max([int(daily_data[monday_index + week_index]['maxtempC']) for week_index in range(7)])
     csv_line['temperature_min'] = min([int(daily_data[monday_index + week_index]['mintempC']) for week_index in range(7)])
     csv_line['temperature_average'] = round(sum([int(daily_data[monday_index + week_index]['avgtempC']) for week_index in range(7)]) / 7, 2)
+
+    csv_line['total_snow_cm'] = sum([float(daily_data[monday_index + week_index]['totalSnow_cm']) for week_index in range(7)])
 
     # Get the city name without ', France' at the end (which will introduce de bug in the csv)
     csv_line['city'] = original_data[0]['result']['data']['request'][0]['query'].split(',')[0]

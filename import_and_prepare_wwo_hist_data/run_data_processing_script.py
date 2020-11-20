@@ -23,7 +23,7 @@ csv_headers.extend(['temperature_max', 'temperature_min', 'temperature_average']
 csv_headers.append('total_snow_cm')
 # csv_headers.append('sun_hour')
 # csv_headers.extend(['wind_speed_kmph', 'wind_direction_degree'])
-# csv_headers.append('precipitation_mm')
+csv_headers.append('precipitation_mm')
 # csv_headers.append('humidity')
 # csv_headers.append('visibility_km')
 # csv_headers.append('pressure')
@@ -46,11 +46,11 @@ for monday_index in range(3, len(daily_data), 7):
     csv_line['week'] = '{}{}'.format(current_date[0], week_number if week_number >= 10 else '0{}'.format(week_number))
 
     # Get temperature min, max and average
-    csv_line['temperature_max'] = max([int(daily_data[monday_index + week_index]['maxtempC']) for week_index in range(7)])
-    csv_line['temperature_min'] = min([int(daily_data[monday_index + week_index]['mintempC']) for week_index in range(7)])
+    csv_line['temperature_max'] = max([float(daily_data[monday_index + week_index]['maxtempC']) for week_index in range(7)])
+    csv_line['temperature_min'] = min([float(daily_data[monday_index + week_index]['mintempC']) for week_index in range(7)])
     csv_line['temperature_average'] = round(sum([int(daily_data[monday_index + week_index]['avgtempC']) for week_index in range(7)]) / 7, 2)
 
-    csv_line['total_snow_cm'] = sum([float(daily_data[monday_index + week_index]['totalSnow_cm']) for week_index in range(7)])
+    csv_line['total_snow_cm'] = round(sum([float(daily_data[monday_index + week_index]['totalSnow_cm']) for week_index in range(7)]), 2)
     csv_line['precipitation_mm'] = round(sum([float(daily_data[monday_index + week_index]['hourly'][0]['precipMM']) for week_index in range(7)]), 2)
 
     # Get the city name without ', France' at the end (which will introduce de bug in the csv)

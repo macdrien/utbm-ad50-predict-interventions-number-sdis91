@@ -51,6 +51,7 @@ for monday_index in range(3, len(daily_data), 7):
     csv_line['temperature_average'] = round(sum([int(daily_data[monday_index + week_index]['avgtempC']) for week_index in range(7)]) / 7, 2)
 
     csv_line['total_snow_cm'] = sum([float(daily_data[monday_index + week_index]['totalSnow_cm']) for week_index in range(7)])
+    csv_line['precipitation_mm'] = round(sum([float(daily_data[monday_index + week_index]['hourly'][0]['precipMM']) for week_index in range(7)]), 2)
 
     # Get the city name without ', France' at the end (which will introduce de bug in the csv)
     csv_line['city'] = original_data[0]['result']['data']['request'][0]['query'].split(',')[0]

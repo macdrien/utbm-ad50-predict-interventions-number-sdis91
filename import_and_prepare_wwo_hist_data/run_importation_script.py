@@ -1,4 +1,4 @@
-from import_and_prepare_wwo_hist_data.script import get_weather_data_in_a_duration
+from import_and_prepare_wwo_hist_data.util import get_weather_data_in_a_duration
 import json
 
 def original_script():

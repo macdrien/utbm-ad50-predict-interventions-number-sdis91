@@ -12,7 +12,8 @@ Authors:
   - [1.2. Subject](#12-subject)
   - [1.3. Bias](#13-bias)
   - [1.4. Weather data clearing](#14-weather-data-clearing)
-  - [Merging the datasets](#merging-the-datasets)
+  - [1.5. Merging the datasets](#15-merging-the-datasets)
+  - [1.6. Experimenting with diffenrents prediction models (?)](#16-experimenting-with-diffenrents-prediction-models-)
 
 ## 1.2. Subject
 
@@ -26,7 +27,6 @@ To do so, we will use six differents data tables in the CSV format:
 4. A table of varicella statictics in France
 5. Weather data in Onderville-Sur-Essonne
 6. The main one, firemen's interventions statistics from 2010 to 2017 in Essonne
-
 
 To do the predictions and process the datasets, we will use Python and libraries such as Pandas, Scikit-Learn or Keras.
 
@@ -53,12 +53,10 @@ The consequence of this is that we had missing days in our datasets. The `get_mi
 Lastly, we made a last script to run the preprocess and keep the data we want. It was a big part too. The main reason is that the biggest frequency we have is a daily report. But others CSVs are weekly. So, we have to made that the daily reports have to be parsed into weekly reports. And the method will change following the kind of data and the corresponding information. For example, we will take the average of the temperature (min and max too) but we will do the sum of the daily precipitations.  
 We exported the result into a new CSV called wwo_hist.csv.
 
-## Merging the datasets
+## 1.5. Merging the datasets
 
 After gathering all the necessary datasets from different data sources, it was necessary to find a way to put them all together in coherent way to form one big dataset / DataFrame. This merging process is done within the `src/merge_datasets.ipynb` notebook.
 
-## Experimenting with diffenrents prediction models (?)
+## 1.6. Experimenting with diffenrents prediction models (?)
 
 We can now "feed" the merged dataset to some models (...)
-
-
